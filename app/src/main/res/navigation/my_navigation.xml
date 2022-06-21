@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="developer.abdusamid.codial_app.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_coursesFragment"
+            app:destination="@id/coursesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/coursesFragment"
+        android:name="developer.abdusamid.codial_app.CoursesFragment"
+        android:label="fragment_courses"
+        tools:layout="@layout/fragment_courses">
+        <action
+            android:id="@+id/action_coursesFragment_to_mentorsFragment"
+            app:destination="@id/mentorsFragment" />
+        <action
+            android:id="@+id/action_coursesFragment_to_showCoursesFragment"
+            app:destination="@id/showCoursesFragment" />
+        <action
+            android:id="@+id/action_coursesFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mentorsFragment"
+        android:name="developer.abdusamid.codial_app.MentorsFragment"
+        android:label="fragment_mentors"
+        tools:layout="@layout/fragment_mentors">
+        <action
+            android:id="@+id/action_mentorsFragment_to_addMentorsFragment"
+            app:destination="@id/addMentorsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMentorsFragment"
+        android:name="developer.abdusamid.codial_app.AddMentorsFragment"
+        android:label="fragment_add_mentors"
+        tools:layout="@layout/fragment_add_mentors" />
+    <fragment
+        android:id="@+id/showCoursesFragment"
+        android:name="developer.abdusamid.codial_app.ShowCoursesFragment"
+        android:label="fragment_show_courses"
+        tools:layout="@layout/fragment_show_courses" />
+    <fragment
+        android:id="@+id/groupsFragment"
+        android:name="developer.abdusamid.codial_app.GroupsFragment"
+        android:label="fragment_groups"
+        tools:layout="@layout/fragment_groups">
+        <action
+            android:id="@+id/action_groupsFragment_to_addGroupsFragment"
+            app:destination="@id/addGroupsFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_showGroupsFragment"
+            app:destination="@id/showGroupsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGroupsFragment"
+        android:name="developer.abdusamid.codial_app.AddGroupsFragment"
+        android:label="fragment_add_groups"
+        tools:layout="@layout/fragment_add_groups" />
+    <fragment
+        android:id="@+id/showGroupsFragment"
+        android:name="developer.abdusamid.codial_app.ShowGroupsFragment"
+        android:label="fragment_show_groups"
+        tools:layout="@layout/fragment_show_groups">
+        <action
+            android:id="@+id/action_showGroupsFragment_to_addEditStudentFragment"
+            app:destination="@id/addEditStudentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditStudentFragment"
+        android:name="developer.abdusamid.codial_app.AddEditStudentFragment"
+        android:label="fragment_add_edit_student"
+        tools:layout="@layout/fragment_add_edit_student" />
+</navigation>
