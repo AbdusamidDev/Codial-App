@@ -47,16 +47,16 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
         const val STUDENTS_GROUPS_ID = "groups_id"
     }
 
-    override fun onCreate(db: SQLiteDatabase?) {
+    override fun onCreate(db: SQLiteDatabase) {
         val queryCourses =
-            "create table $TABLE_COURSES($COURSES_ID integer not null primary key autoincrement unique , $COURSES_NAME text not null unique , $COURSES_ABOUT text not null)"
+            "CREATE TABLE $TABLE_COURSES($COURSES_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE , $COURSES_NAME text NOT NULL unique , $COURSES_ABOUT TEXT NOT NULL)"
         val queryMentors =
-            "create table $TABLE_MENTORS($MENTORS_ID integer not null primary key autoincrement unique , $MENTORS_SURNAME text not null , $MENTORS_NAME text not null , $MENTORS_PATRONYMIC text not null , $MENTORS_COURSES_ID integer not null , foreign key ($MENTORS_COURSES_ID) references $TABLE_COURSES($COURSES_ID))"
+            "CREATE TABLE $TABLE_MENTORS($MENTORS_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE , $MENTORS_SURNAME TEXT NOT NULL , $MENTORS_NAME TEXT NOT NULL , $MENTORS_PATRONYMIC TEXT NOT NULL , $MENTORS_COURSES_ID INTEGER NOT NULL , FOREIGN KEY ($MENTORS_COURSES_ID) REFERENCES $TABLE_COURSES($COURSES_ID))"
         val queryGroups =
-            "create table $TABLE_GROUPS($GROUPS_ID integer not null primary key autoincrement unique , $GROUPS_NAME text not null unique , $GROUPS_MENTORS_ID integer not null , $GROUPS_TIMES text not null , $GROUPS_DAYS text not null , $GROUPS_COURSES_ID integer not null , $GROUPS_OPEN numeric not null , foreign key ($GROUPS_COURSES_ID) references $TABLE_COURSES($COURSES_ID))"
+            "CREATE TABLE $TABLE_GROUPS($GROUPS_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE , $GROUPS_NAME TEXT NOT NULL unique , $GROUPS_MENTORS_ID INTEGER NOT NULL , $GROUPS_TIMES TEXT NOT NULL , $GROUPS_DAYS TEXT NOT NULL , $GROUPS_COURSES_ID INTEGER NOT NULL , $GROUPS_OPEN numeric NOT NULL , FOREIGN KEY ($GROUPS_COURSES_ID) REFERENCES $TABLE_COURSES($COURSES_ID))"
         val queryStudents =
-            "create table $TABLE_STUDENTS($STUDENTS_ID integer not null primary key autoincrement unique , $STUDENTS_NAME text not null , $STUDENTS_SURNAME text not null , $STUDENTS_NUMBER text not null , $STUDENTS_DAY text not null , $STUDENTS_GROUPS_ID integer not null , foreign key ($STUDENTS_GROUPS_ID) references $TABLE_GROUPS($GROUPS_ID))"
-        db!!.execSQL(queryCourses)
+            "CREATE TABLE $TABLE_STUDENTS($STUDENTS_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE , $STUDENTS_NAME TEXT NOT NULL , $STUDENTS_SURNAME TEXT NOT NULL , $STUDENTS_NUMBER TEXT NOT NULL , $STUDENTS_DAY TEXT NOT NULL , $STUDENTS_GROUPS_ID INTEGER NOT NULL , FOREIGN KEY ($STUDENTS_GROUPS_ID) REFERENCES $TABLE_GROUPS($GROUPS_ID))"
+        db.execSQL(queryCourses)
         db.execSQL(queryMentors)
         db.execSQL(queryGroups)
         db.execSQL(queryStudents)
@@ -91,7 +91,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
     override fun showCourses(): ArrayList<Courses> {
         val arrayListCourses = ArrayList<Courses>()
         val database = this.readableDatabase
-        val query = "select * from $TABLE_COURSES"
+        val query = "SELECT * FROM $TABLE_COURSES"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -155,7 +155,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
     override fun showMentors(): ArrayList<Mentors> {
         val arrayListMentors = ArrayList<Mentors>()
         val database = this.readableDatabase
-        val query = "select * from $TABLE_MENTORS"
+        val query = "SELECT * FROM $TABLE_MENTORS"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -198,7 +198,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
 
     override fun getMentorsByID(id: Int): Mentors {
         val database = this.readableDatabase
-        val query = "select * from $TABLE_MENTORS where $MENTORS_ID = $id"
+        val query = "SELECT * FROM $TABLE_MENTORS WHERE $MENTORS_ID = $id"
         val cursor = database.rawQuery(query, null)
         cursor.moveToFirst()
         return Mentors(
@@ -212,7 +212,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
 
     override fun getMentorByCoursesID(courses: Courses) {
         val database = this.writableDatabase
-        val query = "select * from $TABLE_MENTORS where $MENTORS_COURSES_ID = '${courses.id}'"
+        val query = "SELECT * FROM $TABLE_MENTORS WHERE $MENTORS_COURSES_ID = '${courses.id}'"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -231,7 +231,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
     override fun getAllMentorsByID(id: Int): ArrayList<Mentors> {
         val arrayListMentors = ArrayList<Mentors>()
         val database = this.readableDatabase
-        val query = "select * from $TABLE_MENTORS where $MENTORS_COURSES_ID = $id"
+        val query = "SELECT * FROM $TABLE_MENTORS WHERE $MENTORS_COURSES_ID = $id"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -277,7 +277,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
     override fun showGroups(string: String, context: Context): ArrayList<Groups> {
         val arrayList = ArrayList<Groups>()
         val database = this.readableDatabase
-        val query = "select * from $TABLE_GROUPS where $GROUPS_OPEN = '$string'"
+        val query = "SELECT * FROM $TABLE_GROUPS WHERE $GROUPS_OPEN = '$string'"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -341,7 +341,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
 
     override fun getGroupsByMentorsID(mentors: Mentors) {
         val database = this.writableDatabase
-        val query = "select * from $TABLE_GROUPS where $GROUPS_MENTORS_ID = '${mentors.id}'"
+        val query = "SELECT * FROM $TABLE_GROUPS WHERE $GROUPS_MENTORS_ID = '${mentors.id}'"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -428,7 +428,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
     override fun showStudents(id: Int, boolean: Boolean): ArrayList<Students> {
         val arrayListStudents = ArrayList<Students>()
         val database = this.readableDatabase
-        val query = " select * from $TABLE_STUDENTS where $STUDENTS_GROUPS_ID = '$id'"
+        val query = " SELECT * FROM $TABLE_STUDENTS WHERE $STUDENTS_GROUPS_ID = '$id'"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -470,7 +470,7 @@ class MyDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
 
     override fun getStudentByGroupsID(groups: Groups) {
         val database = this.writableDatabase
-        val query = "select * from $TABLE_STUDENTS where $STUDENTS_GROUPS_ID = '${groups.id}'"
+        val query = "SELECT * FROM $TABLE_STUDENTS WHERE $STUDENTS_GROUPS_ID = '${groups.id}'"
         val cursor = database.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
